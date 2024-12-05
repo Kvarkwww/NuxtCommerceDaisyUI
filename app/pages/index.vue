@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import { heroImageUrl } from '@/utils/hero'
-
+  import ContactForm from '~/components/ContactForm.vue'
+  import Footer from '~/components/Footer.vue'
   definePageMeta({
     // layout: 'default',
     // name: 'index',
@@ -37,6 +38,8 @@
       <LaunchSale class="mt-8" />
       <HotDeals class="mt-8" />
     </UContainer>
+    <ContactForm />
+    <Footer />
   </div>
 </template>
 <style scoped></style>
