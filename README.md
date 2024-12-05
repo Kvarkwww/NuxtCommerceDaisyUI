@@ -203,3 +203,4 @@ This project allows JS, and strict mode is turned off. Update `tsconfig.ts` as r
 ## Community
 
 - [Vue Designer Community](https://discord.gg/BYp45Nnu5T)
+# NuxtCommerce-DaisyUI
