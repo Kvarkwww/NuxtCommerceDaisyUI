@@ -40,12 +40,9 @@
           <ul
             class="-tracking-wide font-extrabold space-y-2 text-right uppercase w-full whitespace-nowrap sm:space-y-0 lg:flex lg:flex-wrap lg:justify-center lg:space-x-2"
           >
-            <li>Fashion</li>
-            <li>Beauty</li>
-            <li>Kids</li>
-            <li>Summer</li>
-            <li>Home</li>
-            <li>& More</li>
+            <li>6+</li>
+            <li>9+</li>
+            <li>12+</li>
           </ul>
         </div>
       </div>

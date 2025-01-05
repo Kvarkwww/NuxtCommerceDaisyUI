@@ -1,49 +1,38 @@
 <script setup lang="ts">
-  import { heroImageUrl } from '@/utils/hero'
-
   const props = defineProps({
     imageUrl: {
       type: String,
-      default: heroImageUrl,
+      required: true, // Make this required to ensure an image URL is always passed
     },
     alt: {
       type: String,
-      default: 'hero',
+      default: 'hero', // Default alt text
     },
     cover: {
       type: Boolean,
-      default: true,
+      default: true, // Default to cover styling
     },
     placeholder: {
       type: [Boolean, String],
-      default: false,
+      default: false, // Placeholder disabled by default
     },
   })
 
-  const { optimizeImage } = useOptimizeImage()
-  const imageOptimized = {
-    alt: props.alt,
-    cover: props.cover,
-    ...optimizeImage(
-      props.imageUrl,
-      /* options */
-      {
-        // placeholder: false, // placeholder image before the actual image is fully loaded.
-        placeholder: props.placeholder, // placeholder image before the actual image is fully loaded.
-      },
-      true /* return bgStyles */,
-    ),
-  }
-
-  // const heroImage = imageOptimized.src
-  const bgStyles = imageOptimized.bgStyles
+  // Define the computed background styles based on the provided imageUrl
+  const bgStyles = computed(() => ({
+    backgroundImage: `url('${props.imageUrl}')`,
+    backgroundSize: props.cover ? 'cover' : 'contain',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  }))
 </script>
+
 <template>
-  <div class="bg-center bg-cover bg-no-repeat blur-none z-0" :style="bgStyles">
-    <!-- <div
-      class="bg-center bg-cover bg-no-repeat blur-none z-0 bg-design-image lg:bg-design-image-large"
-    > -->
+  <div class="bg-center bg-cover bg-no-repeat z-0" :style="bgStyles">
     <slot />
   </div>
 </template>
-<style scoped></style>
+
+<style scoped>
+/* Optional additional styles if needed */
+</style>

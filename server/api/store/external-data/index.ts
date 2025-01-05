@@ -57,9 +57,9 @@ export default defineEventHandler(async (/*event*/): Promise<Store> => {
   )
 
   const matchers = {
-    [`men's clothing`]: 'men',
-    [`women's clothing`]: 'women',
-    [`jewelery`]: 'jewellery',
+    [`6+`]: '6+',
+    [`9+`]: '9+',
+    [`12+`]: '12+',
   }
 
   productData.products = rawProducts.map((product) => ({

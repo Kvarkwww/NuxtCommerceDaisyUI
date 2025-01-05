@@ -27,8 +27,18 @@
           ><span
             v-if="shipping"
             class="dark:text-primary-400 text-primary-500 text-xs"
-            >{{ shipping }}</span
-          >
+            >{{ shipping }}</span>
+                   <!-- Snipcart Add-to-Cart Button -->
+        <button
+          class="btn btn-primary mt-4 snipcart-add-item"
+          :data-item-id="id"
+          :data-item-name="title"
+          :data-item-price="price"
+          :data-item-image="image"
+          :data-item-url="`/store/${id}`"
+        >
+          Add to Cart
+        </button>
         </div>
       </div>
     </UCard>

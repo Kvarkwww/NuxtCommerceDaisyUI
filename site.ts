@@ -3,10 +3,10 @@
 // @unocss-include
 
 export default {
-  name: 'NuCommerce',
+  name: 'Rent-A-Game',
   description:
     'Vue Designer Nuxt Tailwind CSS / Nuxt UI - Quick start template',
-  logo: 'i-fluent-emoji:shopping-bags',
+  logo: 'i-fluent-emoji:game-die',
   author: 'Pinegrow',
   url: 'https://pg-nuxtui.netlify.app',
   github: 'https://github.com/pinegrow/pg-nuxtui',
@@ -19,17 +19,11 @@ export default {
   titleSeparator: '|', // default
   nav: [
     { text: 'Home', link: '/', type: 'primary', icon: 'i-mdi-home' },
-    { text: 'Women', link: '/women', type: 'primary', icon: 'i-mdi-home' },
-    { text: 'Men', link: '/men', type: 'primary', icon: 'i-mdi-home' },
+    { text: '6+', link: '/6+', type: 'primary', icon: 'i-mdi-home' },
+    { text: '9+', link: '/9+', type: 'primary', icon: 'i-mdi-home' },
     {
-      text: 'Jewellery',
-      link: '/jewellery',
-      type: 'primary',
-      icon: 'i-mdi-home',
-    },
-    {
-      text: 'Electronics',
-      link: '/electronics',
+      text: '12+ Games',
+      link: '/12+',
       type: 'primary',
       icon: 'i-mdi-home',
     },

@@ -27,18 +27,10 @@
     <TheHeader>
       <div>
         <div class="flex items-center">
-          <h2 class="text-5xl font-semibold">Quick Start</h2>
+          <h2 class="text-5xl font-semibold">Rent a Games</h2>
         </div>
         <div class="flex items-center mt-4">
-          <h6>Github repo for this template</h6>
-          <UButton
-            size="xs"
-            class="ml-2"
-            color="secondary"
-            :to="github"
-            target="_blank"
-            ><span>Click here</span>
-          </UButton>
+          <h6>Company Info</h6>
         </div>
         <slot />
       </div>

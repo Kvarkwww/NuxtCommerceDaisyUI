@@ -13,7 +13,7 @@
       <div
         class="-tracking-wide flex font-bold items-center justify-center text-5xl"
       >
-        <span class="text-center text-primary">Hot Deals</span>
+        <span class="text-center text-primary">New Arrivals & Back in Stock</span>
         <UIcon name="i-twemoji-fire" class="ml-2" width="28px" />
       </div>
       <section

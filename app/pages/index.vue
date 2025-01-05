@@ -38,8 +38,6 @@
       <LaunchSale class="mt-8" />
       <HotDeals class="mt-8" />
     </UContainer>
-    <ContactForm />
-    <Footer />
   </div>
 </template>
 <style scoped></style>

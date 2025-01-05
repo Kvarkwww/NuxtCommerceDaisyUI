@@ -1,133 +1,138 @@
 <script setup lang="ts">
-  definePageMeta({
-    // layout: 'default',
-    name: 'store',
-    // alias: '[...slug]',
-    title: 'Store',
-    description: `Shop 'til You Drop: Your E-Commerce Haven!`,
-    navOrder: '3',
-    hidden: true,
-    type: 'primary',
-    icon: 'i-mdi-home',
-    // ogImage: 'images/ogImage.png', // url or local images inside public folder, for eg, ~/public/images/ogImage.png
-  })
+definePageMeta({
+  name: 'store',
+  title: 'Store',
+  description: `Shop 'til You Drop: Your E-Commerce Haven!`,
+  navOrder: '3',
+  hidden: true,
+  type: 'primary',
+  icon: 'i-mdi-home',
+})
 
-  const route = useRoute()
-  const { id: productId } = route.params
+const route = useRoute()
+const { id: productId } = route.params
 
-  const { fetchProduct } = await useProduct(+productId)
-  const { title, price, description, image, rating, badge, shipping } =
-    fetchProduct()
+// Fetch the product details using the product ID
+const { fetchProduct } = await useProduct(+productId)
+const { id, title, price, description, image, rating, badge, shipping } =
+  fetchProduct()
 
-  useHead({
-    title: title || '',
-  })
+useHead({
+  title: title || '',
+})
 
-  useServerSeoMeta({
-    description: () => description || '',
-  })
+useServerSeoMeta({
+  description: () => description || '',
+})
 
-  const colors = [
-    {
-      id: 1,
-      name: 'Gray',
-    },
-    {
-      id: 2,
-      name: 'Black',
-    },
-    {
-      id: 3,
-      name: 'White',
-    },
-    {
-      id: 4,
-      name: 'Blue',
-    },
-  ]
+// Options for renting durations
+const durations = [
+  { id: 1, name: '1 day', multiplier: 1 },
+  { id: 2, name: '3 days', multiplier: 3 },
+  { id: 3, name: '1 week', multiplier: 7 },
+  { id: 4, name: '2 weeks', multiplier: 14 },
+]
 
-  const selected = ref(colors[0].id)
+const selected = ref(durations[0].id)
 
-  const current = computed(() =>
-    colors.find((color) => color.id === selected.value),
-  )
+// Compute the currently selected duration
+const current = computed(() =>
+  durations.find((duration) => duration.id === selected.value),
+)
+
+// Compute the price based on duration
+const calculatedPrice = computed(() =>
+  (parseFloat(price) * (current.value?.multiplier || 1)).toFixed(2),
+)
 </script>
+
 <template>
   <section class="mx-4 my-16 product-details">
+    <!-- Product Image -->
     <div class="flex justify-center max-h-96 xl:max-h-[600px]">
       <div class="-m-4 bg-white p-8 rounded-lg">
         <NuxtImg :src="image" class="max-h-full" />
-        <!-- <img :src="image" class="max-h-full" /> -->
       </div>
     </div>
+
+    <!-- Product Details -->
     <div class="mt-8 md:mt-0 md:mx-8">
       <div class="relative">
         <UBadge v-if="badge" :label="badge" class="-top-7 absolute" />
         <h3>{{ title }}</h3>
       </div>
+
+      <!-- Ratings and Reviews -->
       <div class="flex items-center justify-between mt-2">
         <div class="flex">
-          <div>
-            <StarsRate class="mt-0.5 w-24" :value="rating.rate" />
-          </div>
-          <div class="ml-2">
-            <div class="text-sm">{{ rating.count }} reviews</div>
-          </div>
+          <StarsRate class="mt-0.5 w-24" :value="rating.rate" />
+          <div class="ml-2 text-sm">{{ rating.count }} reviews</div>
         </div>
-        <div class="md:mr-4">
-          <span class="dark:text-primary-400 text-primary-500 text-xs">{{
-            shipping
-          }}</span>
+        <div class="md:mr-4 text-xs text-primary-500 dark:text-primary-400">
+          {{ shipping }}
         </div>
       </div>
-      <div
-        v-if="badge || shipping"
-        class="flex items-center justify-between mt-4"
-      >
+
+      <!-- Price and Vendor -->
+      <div class="flex items-center justify-between mt-4">
         <div>
-          <span class="font-bold text-xl">${{ price }}</span>
+          <span class="font-bold text-xl">${{ calculatedPrice }}</span>
         </div>
         <div class="md:mr-4"><span>Best Deals Inc.</span></div>
       </div>
-      <div>
-        <div class="mt-4">
-          <USelectMenu
-            v-model="selected"
-            :options="colors"
-            option-attribute="name"
-            value-attribute="id"
-            size="xl"
-          >
-            <template #label
-              ><span>{{ current.name }}</span>
-            </template>
-          </USelectMenu>
-        </div>
-        <div class="mt-4 w-full">
-          <UButton label="Add To Cart" class="rounded-lg" size="lg" block>
-            <span class="py-2 lg:text-lg">Add To Cart</span>
-          </UButton>
-        </div>
+
+      <!-- Rental Duration Selector -->
+      <div class="mt-4">
+        <USelectMenu
+          v-model="selected"
+          :options="durations"
+          option-attribute="name"
+          value-attribute="id"
+          size="xl"
+        >
+          <template #label>
+            <span>{{ current.name }}</span>
+          </template>
+        </USelectMenu>
       </div>
+
+      <!-- Add to Cart Button -->
+      <div class="mt-4 w-full">
+        <button
+          class="btn btn-primary rounded-lg w-full snipcart-add-item"
+          :data-item-id="id"
+          :data-item-name="title"
+          :data-item-price="calculatedPrice"
+          :data-item-url="`/store/${id}`"
+          :data-item-image="image"
+          :data-item-description="description"
+          :data-item-custom1-value="current.name"
+          :data-item-custom1-name="'Rental Duration'"
+        >
+          Add To Cart
+        </button>
+      </div>
+
+      <!-- Product Description -->
       <div class="mt-8">
-        <span>{{ description }}</span>
+        <p>{{ description }}</p>
       </div>
     </div>
   </section>
 </template>
+
 <style scoped>
+.product-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas: 'image' 'details';
+}
+@media (min-width: 768px) {
   .product-details {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas: 'image' 'details';
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 'image details';
   }
-  @media (min-width: 768px) {
-    .product-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
-      grid-template-areas: 'image details';
-    }
-  }
+}
 </style>
